@@ -1,0 +1,43 @@
+const request = require("../utils/request");
+const { getCookie } = require("../utils/setCookie");
+
+module.exports = function () {
+  return {
+    getCompetition() {
+      return request({
+        url: "https://api.juejin.cn/user_api/v1/bugfix/competition",
+        method: "post",
+        headers: {
+          cookie: getCookie(),
+        },
+      });
+    },
+    // getUser(data: { competition_id: number }): Promise<User> {
+    //     const { competition_id } = data;
+    //     return this.http.post("/user_api/v1/bugfix/user", {
+    //       competition_id
+    //     });
+    //   }
+    // 获取游戏需要的
+    getNotCollectBugList: function () {
+      return request({
+        url: "https://api.juejin.cn/user_api/v1/bugfix/not_collect",
+        method: "post",
+        headers: {
+          cookie: getCookie(),
+        },
+      });
+    },
+    collectBug(data) {
+      const { bug_time, bug_type } = data;
+      return request({
+        url: `https://api.juejin.cn/user_api/v1/bugfix/collect`,
+        method: "post",
+        data,
+        headers: {
+          cookie: getCookie(),
+        },
+      });
+    },
+  };
+};
